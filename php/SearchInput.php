@@ -10,6 +10,7 @@ class SearchInput implements Arrayable
         public string $key,
         public string $label,
         public ?string $value = null,
+        public ?string $type = 'text'
     ) {
     }
 
@@ -19,6 +20,7 @@ class SearchInput implements Arrayable
             'key'   => $this->key,
             'label' => $this->label,
             'value' => $this->value,
+            'type' => $this->type,
         ];
     }
 }

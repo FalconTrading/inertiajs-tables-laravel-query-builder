@@ -348,4 +348,18 @@ class InertiaTable
 
         return $response->with('queryBuilderProps', $props);
     }
+
+    public function datePickerRangeFilter(string $key, string $label = null, string $defaultValue = null): self
+    {
+        $this->searchInputs = $this->searchInputs->reject(function (SearchInput $searchInput) use ($key) {
+            return $searchInput->key === $key;
+        })->push(new SearchInput(
+            key: $key,
+            label: $label ?: Str::headline($key),
+            value: $defaultValue,
+            type: 'date-picker'
+        ))->values();
+
+        return $this;
+    }
 }
