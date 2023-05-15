@@ -54,6 +54,7 @@ class InertiaTable
      */
     private function query(string $key, $default = null)
     {
+
         return $this->request->query(
             $this->name === 'default' ? $key : "{$this->name}_{$key}",
             $default
@@ -231,8 +232,12 @@ class InertiaTable
             return $this->searchInputs;
         }
 
+        dump($this->searchInputs);
+        dump($filters);
+
         return $this->searchInputs->map(function (SearchInput $searchInput) use ($filters) {
             if (array_key_exists($searchInput->key, $filters)) {
+
                 $searchInput->value = $filters[$searchInput->key];
             }
 
@@ -317,18 +322,18 @@ class InertiaTable
      * @param string|null $noFilterOptionLabel
      * @return self
      */
-    public function selectFilter(string $key, array $options, string $label = null, string $defaultValue = null, bool $noFilterOption = true, string $noFilterOptionLabel = null): self
+    public function selectFilter(string $key, array $options, string $label = null, bool $multiple = false, string $optionLabelBy = 'name', string $defaultValue = null, bool $noFilterOption = true, string $noFilterOptionLabel = null): self
     {
-        $this->filters = $this->filters->reject(function (Filter $filter) use ($key) {
-            return $filter->key === $key;
-        })->push(new Filter(
+        $this->searchInputs = $this->searchInputs->reject(function (SearchInput $searchInput) use ($key) {
+            return $searchInput->key === $key;
+        })->push(new SearchInput(
             key: $key,
             label: $label ?: Str::headline($key),
-            options: $options,
             value: $defaultValue,
-            noFilterOption: $noFilterOption,
-            noFilterOptionLabel: $noFilterOptionLabel ?: '-',
-            type: 'select'
+            options: $options,
+            optionsLabelBy: $optionLabelBy,
+            type: 'select',
+            multiple: $multiple,
         ))->values();
 
         return $this;
@@ -349,15 +354,14 @@ class InertiaTable
         return $response->with('queryBuilderProps', $props);
     }
 
-    public function datePickerRangeFilter(string $key, string $label = null, string $defaultValue = null): self
+    public function datePickerRangeFilter(string $key, string $label = null): self
     {
         $this->searchInputs = $this->searchInputs->reject(function (SearchInput $searchInput) use ($key) {
             return $searchInput->key === $key;
         })->push(new SearchInput(
             key: $key,
             label: $label ?: Str::headline($key),
-            value: $defaultValue,
-            type: 'date-picker'
+            type: 'date-picker-range',
         ))->values();
 
         return $this;
