@@ -232,9 +232,6 @@ class InertiaTable
             return $this->searchInputs;
         }
 
-        dump($this->searchInputs);
-        dump($filters);
-
         return $this->searchInputs->map(function (SearchInput $searchInput) use ($filters) {
             if (array_key_exists($searchInput->key, $filters)) {
 
