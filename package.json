@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
+    "heroicons": "^2.0.18",
     "lodash-es": "^4.17.21",
     "qs": "^6.10.5"
   },
