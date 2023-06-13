@@ -165,9 +165,10 @@
                                     <template
                                         v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-row-${key}-column-${column.key}`"
-                                        v-show="show(column.key)">
+                                        >
                                         <td
                                             class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap"
+                                            âv-show="show(column.key)"
                                         >
                                             <slot
                                                 :name="`cell(${column.key})`"
