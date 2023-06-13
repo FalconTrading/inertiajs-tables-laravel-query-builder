@@ -253,7 +253,7 @@ class InertiaTable
      * @param bool $searchable
      * @return self
      */
-    public function column(string $key = null, string $label = null, bool $canBeHidden = true, bool $hidden = false, bool $sortable = false, bool $searchable = false): self
+    public function column(string $key = null, string $label = null, bool $canBeHidden = true, bool $hidden = false, bool $sortable = false, bool $searchable = false, string $type = 'text'): self
     {
         $key   = $key ?: Str::kebab($label);
         $label = $label ?: Str::headline($key);
@@ -266,7 +266,8 @@ class InertiaTable
             canBeHidden: $canBeHidden,
             hidden: $hidden,
             sortable: $sortable,
-            sorted: false
+            sorted: false,
+            type: $type,
         ))->values();
 
         if ($searchable) {
