@@ -746,8 +746,7 @@ function isSelected(itemId) {
 }
 
 function onActionClick(actionId) {
-
-    emits("bulkAction", actionId);
+    emits("bulkAction", { actionId, selectedItems });
 }
 
 </script>
